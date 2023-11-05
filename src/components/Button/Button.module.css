@@ -1,0 +1,12 @@
+.btn {
+    width: 80px;
+    height: 20px;
+    border: 0;
+    border-radius: 5px;
+    background-color: dodgerblue;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    color: white;
+}
