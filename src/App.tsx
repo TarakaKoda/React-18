@@ -1,31 +1,11 @@
-import { useEffect, useState } from "react";
-import { CanceledError } from "./services/api-client";
 import userService, { User } from "./services/user-service";
+import useUsers from "./hooks/useUsers";
 import "./App.css";
 
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const { request, cancel } = userService.getAll<User>();
-    request
-      .then((rev) => {
-        setUsers(rev.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-        setIsLoading(false);
-      });
-
-    return () => cancel();
-  }, []);
-
-  const handleDelete = (user: User) => {
+   const {users, setUsers, error, setError, isLoading} = useUsers();
+  
+  const deleteUser = (user: User) => {
     const originalUsers = [...users];
     setUsers(originalUsers.filter((u) => u.id !== user.id));
     userService.delete(user.id).catch((err) => {
@@ -34,11 +14,12 @@ function App() {
     });
   };
 
-  const addUser = () => { 
+  const addUser = () => {
     const originalUsers = [...users];
     const newUser = { id: 0, name: "Taraka" };
     setUsers([newUser, ...users]);
-    userService.create(newUser)
+    userService
+      .create(newUser)
       .then(({ data: savedUser }) => setUsers([savedUser, ...originalUsers]))
       .catch((err) => {
         setError(err.message);
@@ -50,8 +31,7 @@ function App() {
     const originalUser = [...users];
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(originalUser.map((u) => (u.id === user.id ? updatedUser : u)));
-    userService.update(updatedUser)
-    .catch((err) => {
+    userService.update(updatedUser).catch((err) => {
       setError(err.message);
       setUsers(originalUser);
     });
@@ -82,7 +62,7 @@ function App() {
               </button>
               <button
                 className="btn btn-outline-danger"
-                onClick={() => handleDelete(user)}>
+                onClick={() => deleteUser(user)}>
                 Delete
               </button>
             </div>
