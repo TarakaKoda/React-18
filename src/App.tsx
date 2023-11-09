@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface User {
   id: number;
@@ -12,11 +12,22 @@ function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/users")
-      .then((res) => setUsers(res.data))
-      .catch((err) => setError(err.message));
+    // * In the useEffect() we can use the promises then and catch instead of await and async. then and catch is more shorter syntax while fetching the data in useEffect hook.
+    const fetchingUser = async () => {
+      try {
+        const res = await axios.get<User[]>(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        setUsers(res.data);
+      } catch (err) {
+        setError((err as AxiosError).message);
+      }
+    };
+
+    fetchingUser();
   }, []);
+  // .then((res) => setUsers(res.data))
+  // .catch((err) => setError(err.message));
 
   return (
     <>
