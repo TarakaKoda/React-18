@@ -15,7 +15,7 @@ class HttpService {
  getAll<T>() {
     const controller = new AbortController();
     const request = apiClient
-    .get<T[]>("/users", {
+    .get<T[]>(this.endpoint, {
       signal: controller.signal,
     })
 
