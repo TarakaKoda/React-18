@@ -1,4 +1,4 @@
-import { Expenses } from "../../App"
+import { Expenses } from "../ExpensesTracker"
 
 interface Props {
   expenses: Expenses[];

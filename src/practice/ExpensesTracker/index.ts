@@ -4,11 +4,11 @@
 // import ExpensesFilter from "./practice/ExpensesTracker/ExpensesFilter";
 // import ExpensesForm from "./practice/ExpensesTracker/ExpensesForm";
 
-// export interface Expenses {
-//   name: string;
-//   amount: number;
-//   category: string;
-// }
+export interface Expenses {
+  name: string;
+  amount: number;
+  category: string;
+}
 
 // function App() {
 //   const [expenses, setExpenses] = useState<Expenses[]>([

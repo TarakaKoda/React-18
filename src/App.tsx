@@ -1,9 +1,11 @@
-import FetchingDataUsingAxios from "./practice/ConnectingBackend/FetchingDataUsingAxios"
-import UseRefHook from "./practice/ConnectingBackend/UseRefHook"
+import GettingUsersDataUsingFetch from "./practice/ConnectingBackend/FetchMethod/01-BasicFetch";
+import FetchingDataUsingFetchAsyncAndAwait from "./practice/ConnectingBackend/FetchMethod/02-AsyncAndAwait";
+
+
 
 const App = () => {
   return (
-    <FetchingDataUsingAxios/>
+    <FetchingDataUsingFetchAsyncAndAwait/>
   )
 }
 
